@@ -1,6 +1,6 @@
 {
     "env": {
-        "browser": true,
+        "node": true,
         "commonjs": true,
         "es2021": true
     },
@@ -16,5 +16,6 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "@typescript-eslint/no-var-requires": 0
     }
 }

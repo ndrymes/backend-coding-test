@@ -16,7 +16,8 @@
     "**/*.js": [
       "eslint --fix",
       "git add"
-    ]
+    ],
+    "*.js": "eslint --cache --fix"
   },
   "keywords": [
     "Xendit"

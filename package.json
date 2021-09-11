@@ -9,12 +9,8 @@
   "scripts": {
     "test": "mocha tests",
     "start": "node index.js",
-    "coverage": "nyc --reporter=text npm run test"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "coverage": "nyc --reporter=text npm run test",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "**/*.js": [
@@ -36,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
     "eslint": "^7.32.0",
-    "husky": "^7.0.2",
+    "husky": "^7.0.0",
     "lint-staged": "^11.1.2",
     "mocha": "^6.1.4",
     "nyc": "^15.1.0",

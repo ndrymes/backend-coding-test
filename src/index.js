@@ -1,7 +1,7 @@
 "use strict";
 // Attempt database connection
-const { database: db } = require("./config");
-const app = require("./app")(db);
+
+const app = require("./app");
 const { envVars } = require("./config");
 const Logger = require("./helpers/logger");
 

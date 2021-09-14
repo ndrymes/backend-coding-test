@@ -33,7 +33,6 @@ describe("API tests", () => {
     it("should throw an error if a required input is absent", (done) => {
       const cloneRequestPayload = { ...rides[0] };
       delete cloneRequestPayload.start_lat;
-      console.log(cloneRequestPayload);
       request(app)
         .post("/rides")
         .send(cloneRequestPayload)
@@ -46,7 +45,6 @@ describe("API tests", () => {
     it("should throw an error for a  wrong input", (done) => {
       const cloneRequestPayload = { ...rides[0] };
       cloneRequestPayload.start_lat = -91;
-      console.log(cloneRequestPayload);
       request(app)
         .post("/rides")
         .send(cloneRequestPayload)

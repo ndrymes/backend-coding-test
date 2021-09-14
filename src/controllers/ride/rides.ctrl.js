@@ -25,7 +25,6 @@ class RideController {
       });
       return this.handleOk(res, result);
     } catch (error) {
-      console.log({ error });
       return this.handleError(res, error);
     }
   }
@@ -44,7 +43,6 @@ class RideController {
       }
       return this.handleOk(res, result);
     } catch (error) {
-      console.log("error");
       return this.handleError(res, error);
     }
   }
@@ -58,7 +56,6 @@ class RideController {
       });
       return this.handleOk(res, result);
     } catch (error) {
-      console.log("error");
       return this.handleError(res, error);
     }
   }

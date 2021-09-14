@@ -14,7 +14,6 @@ class RideServices {
       const value = await ridesValidator.createride(requestContext);
       return ridesRepository.insertRides(value);
     } catch (error) {
-      console.log({ error });
       throw error;
     }
   }

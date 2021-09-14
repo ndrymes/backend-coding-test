@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 //require services
 const { ridesRepository } = require("../../repositories/rides");
 const ridesValidator = require("./rides.validators");
@@ -13,13 +14,8 @@ class RideServices {
       const value = await ridesValidator.createride(requestContext);
       return ridesRepository.insertRides(value);
     } catch (error) {
-      if (error.name === "ValidationError") {
-        return {
-          error_code: "VALIDATION_ERROR",
-          message: error.message,
-        };
-      }
-      return error.message;
+      console.log({ error });
+      throw error;
     }
   }
 
@@ -32,7 +28,7 @@ class RideServices {
     try {
       return ridesRepository.getAllRides();
     } catch (error) {
-      return error.message;
+      throw error;
     }
   }
 
@@ -46,13 +42,7 @@ class RideServices {
       const value = await ridesValidator.getRide(requestContext);
       return ridesRepository.getRide(value);
     } catch (error) {
-      if (error.name === "ValidationError") {
-        return {
-          error_code: "VALIDATION_ERROR",
-          message: error.message,
-        };
-      }
-      return error.message;
+      throw error;
     }
   }
 }

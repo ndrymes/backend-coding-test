@@ -8,7 +8,7 @@ class Response {
   }
 
   res_message() {
-    return this.res.send({
+    return this.res.status(this.code).send({
       error: this.error,
       code: this.code,
       message: this.message,

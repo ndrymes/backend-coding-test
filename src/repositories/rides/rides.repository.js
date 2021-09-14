@@ -1,6 +1,16 @@
 //require services
-const { database: db } = require("../../config");
+const { connectDatabase } = require("../../config");
+const db = connectDatabase();
+
+const buildSchemas = require("../../model/rides");
+
 class RideRepository {
+  constructor() {
+    db.serialize(() => {
+      // build schema
+      buildSchemas(db);
+    });
+  }
   // Create new ride details
   async insertRides({
     start_lat,
@@ -24,15 +34,16 @@ class RideRepository {
       db.run(
         "INSERT INTO Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) VALUES (?, ?, ?, ?, ?, ?, ?)",
         values,
-        function (err) {
+        function (err, data) {
+          console.log("mine", err);
+          console.log({ data });
           if (err) reject(err.message);
           db.all(
             "SELECT * FROM Rides WHERE rideID = ?",
             this.lastID,
             function (err, rows) {
               if (err) reject("Read error: " + err.message);
-
-              resolve(rows);
+              resolve(rows[0]);
             }
           );
         }
@@ -55,11 +66,14 @@ class RideRepository {
   // Fetch a single ride detail
   async getRide({ id }) {
     return new Promise(function (resolve, reject) {
-      db.all(`SELECT * FROM Rides WHERE rideID='${id}'`, function (err, rows) {
+      //use paramitarized query to prevent Sql injection
+      const query = "SELECT * FROM Rides WHERE rideID = ?";
+      db.all(query, [id], function (err, rows) {
         if (err) {
+          console.log(err);
           reject("Read error: " + err.message);
         }
-        resolve(rows);
+        resolve(rows[0]);
       });
     });
   }

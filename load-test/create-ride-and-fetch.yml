@@ -1,0 +1,43 @@
+config:
+  target: "https://immense-stream-85373.herokuapp.com/"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 50
+      name: Sustained load
+  payload:
+    path: "keywords.csv"
+    fields:
+        - "start_lat"
+        - "start_long"
+        - "end_lat"
+        - "end_long"
+        - "rider_name"
+        - "driver_name"
+        - "driver_vehicle"
+
+
+scenarios:
+  - name: "create a ride"
+    flow:
+      - post:
+          url: "/rides"
+          json:
+            start_lat : "{{ start_lats }}"
+            start_long : "{{ start_long }}"
+            end_lat : "{{ end_lat }}"
+            end_long : "{{ end_long }}"
+            rider_name : "{{ rider_name }}"
+            driver_name : "{{ driver_name }}"
+            driver_vehicle : "{{ sdriver_vehicle }}"
+          capture:
+            - json: "$.results.rideID"
+              as: "rideId"
+      - get:
+          url: "/rides/{{ rideId }}"

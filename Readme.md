@@ -75,6 +75,8 @@ There are multiple endpoints that can be used to retrieve records. Please find b
 
 ```
 
+# Project Structure
+![file structure](https://i.ibb.co/KVyzY5C/structure.png)
 
 # Libraries Used
 

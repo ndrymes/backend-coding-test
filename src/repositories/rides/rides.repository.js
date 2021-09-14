@@ -31,30 +31,28 @@ class RideRepository {
         driver_name,
         driver_vehicle,
       ];
-      db.run(
-        "INSERT INTO Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        values,
-        function (err, data) {
-          console.log("mine", err);
-          console.log({ data });
-          if (err) reject(err.message);
-          db.all(
-            "SELECT * FROM Rides WHERE rideID = ?",
-            this.lastID,
-            function (err, rows) {
-              if (err) reject("Read error: " + err.message);
-              resolve(rows[0]);
-            }
-          );
-        }
-      );
+      const query =
+        "INSERT INTO Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      db.run(query, values, function (err, data) {
+        console.log("mine", err);
+        console.log({ data });
+        if (err) reject(err.message);
+        const subquery = "SELECT * FROM Rides WHERE rideID = ?";
+        db.all(subquery, this.lastID, function (err, rows) {
+          if (err) reject("Read error: " + err.message);
+          resolve(rows[0]);
+        });
+      });
     });
   }
 
   //fetch all new ride details
-  async getAllRides() {
+  async getAllRides({ skip, limit }) {
+      console.log({limit,skip});
     return new Promise(function (resolve, reject) {
-      db.all("SELECT * FROM Rides", function (err, rows) {
+      const query =
+        "SELECT * FROM Rides WHERE rideID NOT IN ( SELECT rideID FROM Rides ORDER BY rideID ASC LIMIT ?) ORDER BY rideID ASC LIMIT ?";
+      db.all(query, [skip, limit], function (err, rows) {
         if (err) {
           reject("Read error: " + err.message);
         }

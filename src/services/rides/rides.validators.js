@@ -26,6 +26,14 @@ class RidesValidator {
     };
     return Joi.object(schema).validateAsync(data);
   }
+  getAllRides(data) {
+    const { Joi } = this;
+    const schema = {
+      skip: Joi.number(),
+      limit:Joi.number()
+    };
+    return Joi.object(schema).validateAsync(data);
+  }
 }
 const ridesValidator = new RidesValidator();
 module.exports = ridesValidator;

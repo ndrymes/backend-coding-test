@@ -33,7 +33,8 @@ class RideController {
   async getAllRides(req, res) {
     try {
       //check if there are no rides
-      const result = await ridesServices.getAllRides();
+      const { skip = 0, limit = 10  } = req.query;
+      const result = await ridesServices.getAllRides({ skip, limit });
       if (result.length === 0) {
         //proper error response
         return this.handleNoContent(res, [], {

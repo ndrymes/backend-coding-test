@@ -1,5 +1,5 @@
 config:
-  target: "https://example.com/api"
+  target: "https://immense-stream-85373.herokuapp.com/"
   phases:
     - duration: 60
       arrivalRate: 5
@@ -14,22 +14,30 @@ config:
   payload:
     path: "keywords.csv"
     fields:
-      - "keyword"
+        - "start_lat"
+        - "start_long"
+        - "end_lat"
+        - "end_long"
+        - "rider_name"
+        - "driver_name"
+        - "driver_vehicle"
+
 
 scenarios:
-  - name: "Search and buy"
+  - name: "create a ride"
     flow:
       - post:
-          url: "/search"
+          url: "/rides"
           json:
-            kw: "{{ keyword }}"
+            start_lat : "{{ start_lats }}"
+            start_long : "{{ start_long }}"
+            end_lat : "{{ end_lat }}"
+            end_long : "{{ end_long }}"
+            rider_name : "{{ rider_name }}"
+            driver_name : "{{ driver_name }}"
+            driver_vehicle : "{{ sdriver_vehicle }}"
           capture:
-            - json: "$.results[0].id"
-              as: "productId"
+            - json: "$.results.rideID"
+              as: "rideId"
       - get:
-          url: "/product/{{ productId }}/details"
-      - think: 5
-      - post:
-          url: "/cart"
-          json:
-            productId: "{{ productId }}"
+          url: "/rides/{{ rideId }}"

@@ -6,20 +6,23 @@ The task is to build a RESTful API to create ride details and also fetch ride da
 
 - Clone the repository using git clone https://github.com/ndrymes/backend-coding-test
 - Run `npm i` or `npm install` to install all app dependencies
-- Make a copy of the .env.sample file and rename to .env
+- Make a copy of the sample.env file and rename to .env
 - Start the app using
-  - `npm run start` for development
-  - `npm run prod` for production
+  - `npm run dev` for development
+  - `npm run start` for production
 
+# Demo
 
-
+The app is hosted on heroku. The base url is <a href="https://immense-stream-85373.herokuapp.com/">https://immense-stream-85373.herokuapp.com/</a>.
+The default endpoint is an health check endpoint that returns a success response.
 
 ## API
 
-There is only a single api available, it can be used to retrieve records
+There are multiple endpoints that can be used to retrieve records. Please find below a POSTMAN documentation url is <a href="https://documenter.getpostman.com/view/7667873/U16nL4dw">https://documenter.getpostman.com/view/7667873/U16nL4dw</a>.
 
 | Parameter   | Description                                 |
 | ----------- | ------------------------------------------- |
+| Base Url    | https://immense-stream-85373.herokuapp.com/ |
 | Http Method | POST                                        |
 | Path        | /rides                                |
 | Http Method | GET                                       |
@@ -88,10 +91,12 @@ I had a lot of fun building this but there are some improvements I can still mak
 - Use a DTO object to handle transfer of data from the api routes to the service layer, this will help keep data consistent even data names change
 - Add a dependency injection library like awilix to handle injection of dependencies
 - Include a makefile to ease the execution of some common tasks
+- Role based authorization
 
 # Testing
 
 - To run the tests, simply type `npm test`
 - We can also get code coverage by `npm run coverage`
+- We can load test by running `npm run test:load`
 
 Thank you 👍

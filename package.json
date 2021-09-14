@@ -13,7 +13,8 @@
     "coverage": "nyc --reporter=text npm run test",
     "prepare": "husky install",
     "prettify": "npx prettier --write src",
-    "lint": "npx eslint *.js"
+    "lint": "npx eslint *.js",
+    "test-load":"artillery run load-test/create-ride-and-fetch.yml"
   },
   "lint-staged": {
     "**/*.js": [

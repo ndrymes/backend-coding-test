@@ -24,9 +24,10 @@ class RideServices {
    * @param {String} request
    * @returns {Object} response [rides]
    */
-  async getAllRides() {
+  async getAllRides({ skip, limit }) {
     try {
-      return ridesRepository.getAllRides();
+      const value = await ridesValidator.getAllRides({skip, limit});
+      return ridesRepository.getAllRides(value);
     } catch (error) {
       throw error;
     }

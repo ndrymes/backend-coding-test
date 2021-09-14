@@ -67,9 +67,31 @@ describe("API tests", () => {
         })
         .expect(200, done);
     });
+
+    it("should create another ride and return the data for pagination test ", (done) => {
+        request(app)
+          .post("/rides")
+          .send(rides[0])
+          .expect(function (res) {
+            res.body.code = 200;
+            res.body.data.rideID = 1;
+          })
+          .expect(200, done);
+      });
+
+    it("should get paginated value", (done) => {
+        request(app)
+          .get("/rides?skip=1&limit=2")
+          .expect(function (res) {
+            res.body.code = 200;
+            res.body.data[0].rideID = 2;
+            res.body.data = [rides[0]];
+          })
+          .expect(200, done);
+      });
   });
 
-  describe("GET/ rides", () => {
+  describe("GET/ rides:/id", () => {
     it("should fetch one ride", (done) => {
       request(app)
         .get(`/rides/${1}`)

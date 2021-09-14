@@ -23,9 +23,10 @@ class RideController {
         driver_name: driverName,
         driver_vehicle: driverVehicle,
       });
-      res.send(result);
+      return this.handleOk(res, result);
     } catch (error) {
-      return this.handleInternalServerError(res, error);
+      console.log({ error });
+      return this.handleError(res, error);
     }
   }
 
@@ -40,9 +41,10 @@ class RideController {
           message: "Could not find any rides",
         });
       }
-      res.send(result);
+      return this.handleOk(res, result);
     } catch (error) {
-      return this.handleInternalServerError(res, error);
+      console.log("error");
+      return this.handleError(res, error);
     }
   }
 
@@ -53,9 +55,10 @@ class RideController {
       const result = await ridesServices.getRide({
         id: rideId,
       });
-      res.send(result);
+      return this.handleOk(res, result);
     } catch (error) {
-      return error;
+      console.log("error");
+      return this.handleError(res, error);
     }
   }
   handleOk(res, data) {
@@ -82,7 +85,15 @@ class RideController {
     return emptyResponse.res_message();
   }
 
-  handleInternalServerError(res, err) {
+  handleError(res, err) {
+    if (err.name === "ValidationError") {
+      const message = {
+        error_code: "VALIDATION_ERROR",
+        message: err.message,
+      };
+      const resp = new Response(HTTPStatus.BadRequest, message, res, true, []);
+      return resp.res_message();
+    }
     logger.error("Error from getting ride data", err);
     const resp = new Response(
       HTTPStatus.INTERNAL_SERVER_ERROR,

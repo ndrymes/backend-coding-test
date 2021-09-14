@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha src/tests",
+    "test": "export NODE_ENV=test && mocha src/tests  --timeout 30000  --exit || true",
     "start": "nodemon src/index.js",
     "coverage": "nyc --reporter=text npm run test",
     "prepare": "husky install",
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
+    "chai": "^4.3.4",
     "eslint": "^7.32.0",
     "husky": "^7.0.0",
     "lint-staged": "^11.1.2",

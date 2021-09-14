@@ -1,7 +1,7 @@
-const database = require("./database");
+const connectDatabase = require("./database");
 const envVars = require("./env-vars");
 module.exports = {
   // middleware,
-  database,
+  connectDatabase,
   envVars,
 };

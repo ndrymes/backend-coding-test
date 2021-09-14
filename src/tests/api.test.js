@@ -84,7 +84,7 @@ describe("API tests", () => {
           .get("/rides?skip=1&limit=2")
           .expect(function (res) {
             res.body.code = 200;
-            res.body.data.rideID = 6;
+            res.body.data[0].rideID = 2;
             res.body.data = [rides[0]];
           })
           .expect(200, done);

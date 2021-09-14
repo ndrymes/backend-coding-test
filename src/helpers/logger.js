@@ -1,4 +1,4 @@
-const winston = require('winston');
+const winston = require("winston");
 
 class LoggerService {
   static myLogger = winston.createLogger({
@@ -7,27 +7,27 @@ class LoggerService {
       winston.format.json()
     ),
     transports: [
-      (process.env.NODE_ENV === 'production') ?
-        new winston.transports.Console() :
-        new winston.transports.Console({
-          format: winston.format.simple()
-        }),
-      new winston.transports.File({ filename: 'error.log', level: 'error' }),
+      process.env.NODE_ENV === "production"
+        ? new winston.transports.Console()
+        : new winston.transports.Console({
+            format: winston.format.simple(),
+          }),
+      new winston.transports.File({ filename: "error.log", level: "error" }),
     ],
   });
   static error(msg, error) {
     LoggerService.myLogger.error({
       timeStamp: new Date().toLocaleString(),
       message: msg,
-      error
-    })
+      error,
+    });
   }
   static info(msg, info = null) {
     LoggerService.myLogger.info({
       timeStamp: new Date().toLocaleString(),
       message: msg,
-      data: info || ''
-    })
+      data: info || "",
+    });
   }
 }
 

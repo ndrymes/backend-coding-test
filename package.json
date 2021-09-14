@@ -8,10 +8,12 @@
   },
   "scripts": {
     "test": "export NODE_ENV=test && mocha src/tests  --timeout 30000  --exit || true",
-    "start": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "coverage": "nyc --reporter=text npm run test",
     "prepare": "husky install",
-    "prettify": "npx prettier --write src"
+    "prettify": "npx prettier --write src",
+    "lint": "npx eslint *.js"
   },
   "lint-staged": {
     "**/*.js": [

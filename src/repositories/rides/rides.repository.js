@@ -33,9 +33,7 @@ class RideRepository {
       ];
       const query =
         "INSERT INTO Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) VALUES (?, ?, ?, ?, ?, ?, ?)";
-      db.run(query, values, function (err, data) {
-        console.log("mine", err);
-        console.log({ data });
+      db.run(query, values, function (err) {
         if (err) reject(err.message);
         const subquery = "SELECT * FROM Rides WHERE rideID = ?";
         db.all(subquery, this.lastID, function (err, rows) {
@@ -48,7 +46,6 @@ class RideRepository {
 
   //fetch all new ride details
   async getAllRides({ skip, limit }) {
-      console.log({limit,skip});
     return new Promise(function (resolve, reject) {
       const query =
         "SELECT * FROM Rides WHERE rideID NOT IN ( SELECT rideID FROM Rides ORDER BY rideID ASC LIMIT ?) ORDER BY rideID ASC LIMIT ?";
@@ -68,7 +65,6 @@ class RideRepository {
       const query = "SELECT * FROM Rides WHERE rideID = ?";
       db.all(query, [id], function (err, rows) {
         if (err) {
-          console.log(err);
           reject("Read error: " + err.message);
         }
         resolve(rows[0]);
